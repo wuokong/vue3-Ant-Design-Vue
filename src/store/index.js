@@ -3,7 +3,6 @@ import router from '../router'
 import { asyncRoutes } from '../router/data'
 import setting from './setting'
 import { message } from 'ant-design-vue'
-import { toRaw } from "vue"
 const addRoutesPort = (aRoutes) => {
     aRoutes.map(about => {
         if (about.children ) { 
@@ -11,6 +10,7 @@ const addRoutesPort = (aRoutes) => {
         router.addRoute(about)
     })
 }
+// 动态获取当前路由列表的首个路由
 const pathRoot = (route) => {
     let i = 0
     for (let res of route) {
