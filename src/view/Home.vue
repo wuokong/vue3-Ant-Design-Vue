@@ -2,13 +2,22 @@
   <a-layout>
     <a-layout-header class="header">
       <a-row justify="space-between">
-        <a-col :span="20">
+        <a-col>
           <a-row>
               <a href="https://next.antdv.com/components/overview-cn" target="_blank" rel="noopener noreferrer" class="title">ant-design-vue文档</a>
           </a-row>
         </a-col>
         <a-col>
           <a href="https://blog.csdn.net/weixin_39007040/article/details/121949038" target="_blank" class="title">笔记</a>
+          <a-select
+            ref="select"
+            v-model:value="locale"
+            style="width: 120px;margin-left:15px"
+            @change="localeChange"
+          >
+            <a-select-option :value="zhCN.locale">中文</a-select-option>
+            <a-select-option :value="enUS.locale">English</a-select-option>
+          </a-select>
           <a-button type="primary" danger @click="quit()" style="margin-left: 20px">退出</a-button>
         </a-col>
       </a-row>
@@ -54,7 +63,8 @@ import { useRouter, useRoute, onBeforeRouteLeave } from "vue-router";
 import { useStore } from "vuex";
 import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons-vue";
 import Menu from "@/components/menu";
-
+import enUS from "ant-design-vue/es/locale/en_US";
+import zhCN from "ant-design-vue/es/locale/zh_CN";
 export default {
   name: "HOME",
   components: {
@@ -72,11 +82,13 @@ export default {
     const Router = useRouter();
     const Route = useRoute();
     const Store = useStore();
-    console.log(Route)
     const Data = reactive({
       selectedKeys1: ['1'],
       collapsed: false,
-      breadcrumb: Route.meta.openKey || []
+      breadcrumb: Route.meta.openKey || [],
+      locale: Store.getters.language,
+      enUS,
+      zhCN
     });
     onMounted(() => {
     });
@@ -89,6 +101,9 @@ export default {
       },
       quit() {
         Store.dispatch("QuietLogin");
+      },
+      localeChange(e) {
+        Store.commit('SetLanguage', e)
       }
     };
     return {

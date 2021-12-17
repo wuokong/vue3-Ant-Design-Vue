@@ -28,35 +28,16 @@ export default {
       Store.commit('SetOpenKeys', JSON.stringify(oneself.keyPath))
       Store.commit('SetSelectedKeys', JSON.stringify([oneself.key]))
     })
-    const forRouterOpen = ((oneself, keys = []) => {
-        if (oneself) {
-            for(let i= 0; i < oneself.length; i ++) {
-                let res = oneself[i]
-                if (Route.path == res.path ) {
-                  break
-                }
-                if (res.children && res.children.length > 0 ) {
-                  forRouterOpen(res.children, keys)
-                }
-            }
-        }
-    })
     onMounted(() => {
       let route = JSON.parse(sessionStorage.getItem('PRESENT_ROUTE'))
       let list = [];
-      route.map((oneself, index )=> {
+      route.map((oneself )=> {
         if (!oneself.meta.hidden ) {
             list.push(oneself)
-            Data.openKeys = []
-            index == 0 && Data.openKeys.push(oneself.path)
-            if (oneself.children && oneself.children.length > 0) {
-              Data.openKeys.push(oneself.children[0].path)
-              forRouterOpen(oneself.children)
-            }
         }
       });
       Data.list = list;
-      if (toRaw(Store.getters.openKeys)) Data.openKeys = JSON.parse(Store.getters.openKeys)
+      if (Store.getters.openKeys &&toRaw(Store.getters.openKeys).length>0) Data.openKeys = JSON.parse(Store.getters.openKeys)
       Data.selectedKeys = JSON.parse(Store.getters.selectedKeys) || [Route.path]
     })
     return {

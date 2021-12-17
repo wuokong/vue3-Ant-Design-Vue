@@ -353,15 +353,6 @@ export const asyncRoutes = [{
                     }
                 }
             ]
-        },
-        {
-            path: "/WkConfig",
-            name: 'WkConfig',
-            component: () => import(/* webpackChunkName: "about" */ '@/components/WkConfig.vue'),
-            meta: {
-                hidden: false,
-                openKey: ['Home']
-            }
         }
     ]
 }]
