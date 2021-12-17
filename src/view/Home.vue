@@ -8,7 +8,7 @@
           </a-row>
         </a-col>
         <a-col>
-          <a href="https://blog.csdn.net/weixin_39007040/article/details/121949038" class="title">笔记</a>
+          <a href="https://blog.csdn.net/weixin_39007040/article/details/121949038" target="_blank" class="title">笔记</a>
           <a-button type="primary" danger @click="quit()" style="margin-left: 20px">退出</a-button>
         </a-col>
       </a-row>

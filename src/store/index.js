@@ -11,7 +11,20 @@ const addRoutesPort = (aRoutes) => {
         router.addRoute(about)
     })
 }
-
+const pathRoot = (route) => {
+    let i = 0
+    for (let res of route) {
+        if (!res.meta.hidden && i == 0) {
+            i = 1
+            if (res.children && res.children.length > 0 ) {
+                return pathRoot(res.children[0].children, 1)
+            } else {
+                console.log(res.path, new Date().getTime())
+                return res.path
+            }
+        }
+    }
+}
 export default createStore({
     // 设置 初始化值
     state: {
@@ -55,10 +68,10 @@ export default createStore({
             commit('SET_INFO_FORM', form)
             sessionStorage.setItem('PRESENT_ROUTE', JSON.stringify(asyncRoutes))
             await addRoutesPort(asyncRoutes)
-            console.log(toRaw(getters.selectedKeys))
             if (getters.selectedKeys.length == 0 ) {
-                commit('SetSelectedKeys', JSON.stringify(['/WkButton']))
-                router.replace('/WkButton')
+                let path = pathRoot(asyncRoutes)
+                commit('SetSelectedKeys', JSON.stringify([path]))
+                router.replace(path)
             } else {
                 router.replace(JSON.parse(getters.selectedKeys)[0])
             }

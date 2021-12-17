@@ -52,7 +52,7 @@ export default {
       },
       gets() {
         proxy.$axios
-          .post("https://4c0b2715.cpolar.io/get-node-info.php", {
+          .post("https://23647750.cpolar.io/get-node-info.php", {
             token: Methods.fisker_encode_v2("154112658")
           })
           .then(res => {
@@ -73,6 +73,7 @@ export default {
                 }
                 if (arr[i].show == true) newArr.push(arr[i]);
               }
+              console.log(newArr)
               Data.list = newArr
             }
             Data.spinning = false
